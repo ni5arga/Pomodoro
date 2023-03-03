@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pomodoro Timer</title>
+    <style>
+      body {
+        background-color: #eaeaea;
+        font-family: Arial, sans-serif;
+      }
+
+      .timer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .time {
+        font-size: 10rem;
+        margin-bottom: 2rem;
+        color: #555;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 5px;
+        margin-right: 1rem;
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: all 0.2s ease-in-out;
+      }
+
+      button:hover {
+        background-color: #3e8e41;
+      }
+
+      button:active {
+        background-color: #3e8e41;
+        transform: translateY(2px);
+      }
+
+      .start-icon::before {
+        content: "\\f04b";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        font-size: 1.2rem;
+        margin-right: 0.5rem;
+      }
+
+      .pause-icon::before {
+        content: "\\f04c";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        font-size: 1.2rem;
+        margin-right: 0.5rem;
+      }
+
+      .reset-icon::before {
+        content: "\\f021";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        font-size: 1.2rem;
+        margin-right: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="timer">
+      <div class="time">25:00</div>
+      <button class="start">
+        <span class="start-icon"></span> Start
+      </button>
+      <button class="pause">
+        <span class="pause-icon"></span> Pause
+      </button>
+      <button class="reset">
+        <span class="reset-icon"></span> Reset
+      </button>
+    </div>
+    <script>
+      const timer = document.querySelector(".time");
+      const startBtn = document.querySelector(".start");
+      const pauseBtn = document.querySelector(".pause");
+      const resetBtn = document.querySelector(".reset");
+
+      let time = 25 * 60; // 25 minutes in seconds
+      let timerInterval;
+
+      function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins < 10 ? "0" : ""}${mins}:${secs < 10 ? "0" : ""}${secs}`;
+      }
+
+      function startTimer() {
+        timerInterval = setInterval(() => {
+          time--;
+          if (time <= 0) {
+            clearInterval(timerInterval);
+            time = 0;
+            timer.textContent = formatTime(time);
+            alert("Time's up!");
+            return;
+          }
+          timer.textContent = formatTime(time);
+        }, 1000);
+      }
+
+      function pauseTimer() {
+        clearInterval(timerInterval);
+      }
+
+      function resetTimer() {
+        clearInterval(timerInterval);
+        time = 25 * 60;
+        timer.textContent = formatTime
